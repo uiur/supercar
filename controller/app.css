@@ -1,0 +1,17 @@
+input[type="button"] {
+  display: inline-block;
+  width: 200px;
+  height: 100px;
+  border-radius: 50px;
+  border: 1px solid #aaa;
+  font-size: 36px;
+  background: white;
+}
+
+#speed {
+  width: 200px;
+}
+
+.speed-container {
+  margin-bottom: 60px;
+}
