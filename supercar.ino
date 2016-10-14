@@ -14,6 +14,10 @@ const int in_left1 = 2;
 const int in_left2 = 15;
 const int in_right1 = 12;
 const int in_right2 = 14;
+const int sensor_left = 16;
+const int sensor_right = 5;
+
+const int speed = 600;
 
 void handleNotFound() {
   digitalWrite ( led, 1 );
@@ -40,7 +44,9 @@ void setup() {
   pinMode(in_left2, OUTPUT);
   pinMode(in_right1, OUTPUT);
   pinMode(in_right2, OUTPUT);
-  
+  pinMode(sensor_left, INPUT);
+  pinMode(sensor_right, INPUT);
+
   digitalWrite(led, 0);
   digitalWrite(in_left1, 0);
   digitalWrite(in_left2, 0);
@@ -88,7 +94,49 @@ void setup() {
   Serial.println ( "HTTP server started" );
 }
 
+void moveRight() {
+  analogWrite(in_right1, 1000);
+  digitalWrite(in_right2, 0);
+  
+  digitalWrite(in_left1, 0);
+  digitalWrite(in_left2, 0);
+}
+
+void moveLeft() {
+  analogWrite(in_left1, 1000);
+  digitalWrite(in_left2, 0);
+  
+  digitalWrite(in_right1, 0);
+  digitalWrite(in_right2, 0);  
+}
+
 void loop() {
-  server.handleClient();
+  // server.handleClient();
+  int left_on_black = digitalRead(sensor_left);
+  int right_on_black = digitalRead(sensor_right);
+  
+  if (left_on_black && right_on_black) {
+    digitalWrite(in_left1, 1);
+    digitalWrite(in_left2, 1);
+    digitalWrite(in_right1, 1);
+    digitalWrite(in_right2, 1);
+    return;
+  }
+
+  if (left_on_black && !right_on_black) {
+    moveRight();
+    return;
+  }
+
+  if (!left_on_black && right_on_black) {
+    moveLeft();
+    return;
+  }
+
+  analogWrite(in_left1, 700);
+  digitalWrite(in_left2, 0);
+
+  analogWrite(in_right1, 700);
+  digitalWrite(in_right2, 0);
 }
 

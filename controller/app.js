@@ -42,11 +42,11 @@ $(() => {
         break
 
       case 'ArrowLeft':
-        setSpeed(speed, direction - 0.25)
+        setSpeed(speed, direction - 1)
         break
 
       case 'ArrowRight':
-        setSpeed(speed, direction + 0.25)
+        setSpeed(speed, direction + 1)
         break
 
     }
